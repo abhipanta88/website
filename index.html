@@ -4,17 +4,18 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Grades</title>
+  <!-- Root-relative URLs so CSS/JS/images always load from the site root on Render. -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Lato:wght@400;700;900&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="styles.css?v=3" />
+  <link rel="stylesheet" href="/styles.css?v=4" />
 </head>
 <body>
   <div id="app">
     <!-- Global left sidebar -->
     <aside class="global-nav" id="globalNav">
       <a class="gn-logo" href="#" title="Dashboard" data-gn="logo" aria-label="University of Toronto — Dashboard">
-        <img class="gn-logo-img" src="images/uoft-logo.png" width="52" height="52" alt="" />
+        <img class="gn-logo-img" src="/images/uoft-logo.png" width="52" height="52" alt="" />
       </a>
 
       <a class="gn-item" href="#" data-label="Account" data-gn="account">
@@ -98,7 +99,7 @@
   <!-- Tooltip url status (lower-left like browser status bar in screenshots) -->
   <div id="statusbar" class="statusbar" hidden>https://q.utoronto.ca</div>
 
-  <script src="data.js?v=2"></script>
-  <script src="app.js?v=3"></script>
+  <script src="/data.js?v=4"></script>
+  <script src="/app.js?v=4"></script>
 </body>
 </html>

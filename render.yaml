@@ -1,19 +1,23 @@
-# Render Blueprint — static site (HTML/CSS/JS at repo root)
+# Render Blueprint — static site
+# Service name becomes: https://utoronto-ca.onrender.com
 # Docs: https://render.com/docs/blueprint-spec
 #
-# If this repo’s Git root is a parent folder and the site lives in ./websites,
-# set rootDir on this service (e.g. rootDir: websites) and keep staticPublishPath: .
+# Monorepo: if this project is not the Git root, set rootDir (e.g. rootDir: websites).
 
 services:
   - type: web
-    name: quercus-grades-demo
+    name: utoronto-ca
     runtime: static
-    # No bundler — publish files as-is from the publish directory
     buildCommand: 'echo "Static site — no build"'
     staticPublishPath: .
     envVars:
       - key: SKIP_INSTALL_DEPS
         value: "true"
+    # Non-file paths serve index.html (static files like /styles.css are still served as files).
+    routes:
+      - type: rewrite
+        source: /*
+        destination: /index.html
     headers:
       - path: /*
         name: X-Frame-Options
