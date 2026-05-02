@@ -1,5 +1,5 @@
 {
-  "name": "quercus-grades-demo",
+  "name": "utoronto-quercus-grades",
   "private": true,
-  "description": "Static UofT Quercus grades UI demo (no npm build)"
+  "description": "University of Toronto Quercus grades interface (static site)"
 }

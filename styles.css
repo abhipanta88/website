@@ -1,5 +1,5 @@
 /* =========================================================
-   UofT Quercus (Canvas-based) clone — global styles
+   UofT Quercus (Canvas-style) grades UI — global styles
    ========================================================= */
 
 :root {
@@ -298,6 +298,17 @@ a:hover { text-decoration: underline; color: var(--link-blue-strong); }
   justify-content: flex-end;
   margin-top: -42px;
   margin-bottom: 8px;
+}
+
+/* Horizontal scroll wrapper for wide grade tables on small screens */
+.table-scroll {
+  width: 100%;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  margin: 0 0 12px;
+}
+.table-scroll .grades-table {
+  min-width: 640px;
 }
 
 /* Grades table */
@@ -613,7 +624,7 @@ a:hover { text-decoration: underline; color: var(--link-blue-strong); }
   font-weight: 700;
 }
 
-/* ----- Demo placeholder pages (Canvas empty-state style) ----- */
+/* ----- Placeholder / empty-state panels ----- */
 .placeholder-full {
   padding: 28px 32px 80px;
   min-height: calc(100vh - 52px);
@@ -656,17 +667,181 @@ a:hover { text-decoration: underline; color: var(--link-blue-strong); }
   font-weight: 700;
 }
 
-/* Responsive (best-effort) */
+/* ---- Responsive: tablet & phone ---- */
 @media (max-width: 1100px) {
-  .page { grid-template-columns: 200px 1fr; }
-  .right-rail { display: none; }
+  .page,
+  .page.no-rail,
+  .page.no-side {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    padding: 14px 16px 32px;
+  }
+  .side-nav {
+    order: 1;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    overflow-y: hidden;
+    gap: 0;
+    padding: 8px 0 12px;
+    margin: 0 0 12px;
+    border-bottom: 1px solid var(--line);
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: thin;
+  }
+  .side-nav .term-label {
+    flex: 0 0 100%;
+    min-width: 100%;
+    padding: 4px 8px 6px;
+  }
+  .side-nav a {
+    flex: 0 0 auto;
+    white-space: nowrap;
+    font-size: 13px;
+    padding: 8px 12px;
+  }
+  .content {
+    order: 2;
+    width: 100%;
+    min-width: 0;
+  }
+  .right-rail {
+    order: 3;
+    width: 100%;
+    max-width: 100%;
+    border-top: 1px solid var(--line);
+    padding-top: 16px;
+    margin-top: 8px;
+  }
+  .print-row {
+    margin-top: 8px;
+    margin-bottom: 12px;
+  }
 }
-@media (max-width: 720px) {
-  .page { grid-template-columns: 1fr; padding: 12px; }
-  .side-nav { flex-direction: row; flex-wrap: wrap; gap: 6px; }
-  .side-nav a { padding: 4px 8px; }
-  :root { --nav-width: 64px; }
-  .gn-logo-img { width: 44px; height: 44px; }
-  .gn-icon svg { width: 20px; height: 20px; }
-  .gn-label { font-size: 9px; }
+
+@media (max-width: 768px) {
+  html {
+    -webkit-text-size-adjust: 100%;
+  }
+  body {
+    font-size: 15px;
+    padding-bottom: env(safe-area-inset-bottom, 0);
+  }
+  #app {
+    min-height: 100dvh;
+  }
+  :root {
+    --nav-width: 56px;
+  }
+  .global-nav {
+    width: 56px;
+    flex: 0 0 56px;
+  }
+  .gn-item {
+    padding: 8px 2px 6px;
+    min-height: 44px;
+    box-sizing: border-box;
+  }
+  .gn-label {
+    font-size: 8px;
+    line-height: 1.05;
+  }
+  .gn-logo-img {
+    width: 40px;
+    height: 40px;
+  }
+  .gn-icon svg {
+    width: 22px;
+    height: 22px;
+  }
+  .top-bar {
+    padding: 8px 10px;
+    font-size: 13px;
+  }
+  .crumbs {
+    gap: 4px;
+  }
+  .content h1.page-title {
+    font-size: clamp(1.1rem, 4.5vw, 1.35rem);
+    margin: 12px 0 14px;
+  }
+  .toolbar-row {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 12px;
+  }
+  .toolbar-row .field select {
+    width: 100%;
+    min-width: 0;
+    max-width: none;
+  }
+  .btn {
+    min-height: 44px;
+    justify-content: center;
+  }
+  .courses-page {
+    padding: 12px 14px 48px;
+  }
+  .courses-page h1 {
+    font-size: clamp(1.15rem, 5vw, 1.4rem);
+  }
+  .courses-page .course-row {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 6px;
+    padding: 12px 4px;
+  }
+  .courses-page .course-row .grade {
+    text-align: left;
+    min-width: 0;
+  }
+  .grades-table {
+    font-size: 13px;
+  }
+  .grades-table thead th,
+  .grades-table tbody tr td {
+    padding: 8px 6px 8px 0;
+  }
+  .table-scroll .grades-table {
+    min-width: 560px;
+  }
+  .placeholder-full {
+    padding: 16px 14px 48px;
+    min-height: 55dvh;
+  }
+  .placeholder-inner {
+    margin-top: 16px;
+    padding: 22px 16px;
+  }
+  .placeholder-inner h2 {
+    font-size: 1.1rem;
+  }
+  .loading-card {
+    margin: 0 16px;
+    max-width: calc(100vw - 32px);
+    padding: 22px 20px;
+  }
+  .statusbar {
+    font-size: 11px;
+    max-width: calc(100vw - 20px);
+    left: env(safe-area-inset-left, 0);
+    bottom: env(safe-area-inset-bottom, 0);
+  }
+  .right-rail .show-saved {
+    white-space: normal;
+  }
+}
+
+@media (max-width: 380px) {
+  :root {
+    --nav-width: 52px;
+  }
+  .global-nav {
+    width: 52px;
+    flex: 0 0 52px;
+  }
+  .gn-collapse {
+    padding: 8px 0;
+  }
 }

@@ -1,11 +1,11 @@
 /* ============================================================
-   UofT Quercus clone — SPA renderer
+   UofT Quercus grades UI — SPA renderer
    ============================================================ */
 
 const VIEWPORT = document.getElementById("viewport");
 const STATUSBAR = document.getElementById("statusbar");
 const LOADING_EL = () => document.getElementById("loadingOverlay");
-const LAST_COURSE_KEY = "quercus_demo_last_course_id";
+const LAST_COURSE_KEY = "utoronto_quercus_last_course";
 
 function escapeAttr(s) {
   return String(s ?? "")
@@ -239,7 +239,7 @@ function renderCourse(courseId) {
 
   /* ------- Top breadcrumbs: short course code › Grades › Aditya Deol ------- */
   const crumbs = [
-    { label: course.code, href: "#", cls: "js-demo-to-courses" },
+    { label: course.code, href: "#", cls: "js-nav-courses" },
     { label: "Grades", href: `#course/${course.id}` },
     { label: STUDENT.fullName }
   ];
@@ -392,6 +392,7 @@ function renderCourse(courseId) {
   }
 
   const tableHtml = `
+    <div class="table-scroll" role="region" aria-label="Grade table">
     <table class="grades-table">
       <colgroup>
         <col class="col-name" />
@@ -413,6 +414,7 @@ function renderCourse(courseId) {
         ${rows}
       </tbody>
     </table>
+    </div>
     ${footerNoticeHtml}
   `;
 
@@ -548,79 +550,79 @@ function infoSvg() {
    Global / course tool placeholders + navigation
    ============================================================ */
 
-const GLOBAL_DEMO_COPY = {
+const GLOBAL_PLACEHOLDER_COPY = {
   dashboard: {
     title: "Dashboard",
     lines: [
-      "Your Canvas dashboard would list cards for each course, upcoming assignments, and recent announcements.",
-      "This offline demo only includes the Grades experience; other tiles are intentionally blank."
+      "Your Canvas dashboard lists cards for each course, upcoming assignments, and recent activity.",
+      "Additional course widgets and announcements appear here as your instructors publish them."
     ]
   },
   account: {
     title: "Account",
     lines: [
-      "Account settings, notification preferences, pronouns, and profile photo controls load here on the live site.",
-      "Nothing you change in this demo is saved."
+      "Manage notification preferences, display settings, pronouns, and your profile photo.",
+      "Account changes are applied in your live Quercus session when you sign in through your institution."
     ]
   },
   groups: {
     title: "Groups",
     lines: [
-      "Student groups and group assignments appear in this space when your courses use them.",
-      "No group memberships are bundled with this preview."
+      "Student groups and group assignments appear when your courses use them.",
+      "Your instructor can add you to groups at any point in the term."
     ]
   },
   calendar: {
     title: "Calendar",
     lines: [
       "The Canvas calendar aggregates due dates from every enrolled course.",
-      "Calendar feeds are not connected in this static build."
+      "Subscribe with your preferred calendar app from the Calendar menu in Quercus."
     ]
   },
   inbox: {
     title: "Inbox",
     lines: [
-      "Conversations with instructors and classmates would list here (the live badge shows unread messages).",
-      "Inbox data is omitted from the demo bundle."
+      "Conversations with instructors and classmates appear here; the badge shows unread messages.",
+      "Select a course filter to narrow messages by course."
     ]
   },
   history: {
     title: "History",
     lines: [
-      "Recently viewed pages across Quercus are tracked here for quick access.",
-      "History is disabled for this local clone."
+      "Recently viewed pages across Quercus are listed here for quick access.",
+      "History reflects pages you have opened while signed in."
     ]
   },
   materials: {
     title: "Materials Costs",
     lines: [
-      "Course material fees and opt-out notices appear in this panel when applicable.",
-      "No billing information is shown in the demo."
+      "Course material fees and opt-out notices appear in this panel when your campus enables them.",
+      "Contact your department if you have questions about listed materials."
     ]
   },
   evals: {
     title: "Course Evals",
     lines: [
-      "End-of-term course evaluation links launch from this entry point during the evaluation window.",
-      "Evaluations are not active in this preview."
+      "End-of-term course evaluation links appear here during the official evaluation window.",
+      "Your instructor will announce when evaluations are open."
     ]
   },
   help: {
     title: "Help",
     lines: [
-      "Canvas documentation, Quercus support articles, and chat links open from the Help menu.",
-      "Use your browser back button to return to the demo after visiting external help."
+      "Canvas documentation, Quercus support articles, and chat links are available from the Help menu.",
+      "For technical issues, contact your campus help desk."
     ]
   }
 };
 
-function renderGlobalDemoPage(gnKey) {
-  const copy = GLOBAL_DEMO_COPY[gnKey] || {
+function renderGlobalPlaceholderPage(gnKey) {
+  const copy = GLOBAL_PLACEHOLDER_COPY[gnKey] || {
     title: "Quercus",
-    lines: ["This screen is not included in the demo bundle."]
+    lines: ["This page has no additional content to display right now."]
   };
   const crumbs = [
-    { label: "Courses", href: "#", cls: "js-demo-to-courses" },
+    { label: "Courses", href: "#", cls: "js-nav-courses" },
     { label: copy.title },
     { label: STUDENT.fullName }
   ];
@@ -631,7 +633,7 @@ function renderGlobalDemoPage(gnKey) {
       <div class="placeholder-inner">
         <h2>${escape(copy.title)}</h2>
         ${paras}
-        <p class="hint"><a href="#" class="js-demo-to-courses">Return to Courses</a> · University of Toronto Quercus (demo)</p>
+        <p class="hint"><a href="#" class="js-nav-courses">Return to Courses</a> · University of Toronto Quercus</p>
       </div>
     </div>
   `;
@@ -643,35 +645,35 @@ function toolPlaceholderBody(toolName, course) {
   const gradeLink = `<a href="#course/${id}">Grades</a>`;
   switch (toolName) {
     case "Home":
-      return `<p>Course home for <strong>${code}</strong> is not included in this demo. Use ${gradeLink} in the sidebar to return to the gradebook.</p>`;
+      return `<p>Course home for <strong>${code}</strong> has no additional content to display on this page. Use ${gradeLink} in the course menu to open the gradebook.</p>`;
     case "Announcements":
-      return `<p>No announcements have been posted for <strong>${code}</strong> in this offline preview.</p>`;
+      return `<p>There are no announcements to show for <strong>${code}</strong>.</p>`;
     case "Modules":
-      return `<p>Learning modules for <strong>${code}</strong> have not been published in this static bundle.</p>`;
+      return `<p>There are no modules to display yet for <strong>${code}</strong>.</p>`;
     case "Assignments":
-      return `<p>The assignment index for <strong>${code}</strong> is omitted here—only the Grades screen is fully mocked up.</p>`;
+      return `<p>No assignments are listed on this page for <strong>${code}</strong>. Use ${gradeLink} to view graded work.</p>`;
     case "Syllabus":
-      return `<p>The syllabus for <strong>${code}</strong> would open as a page or PDF on the live Quercus site.</p>`;
+      return `<p>The syllabus for <strong>${code}</strong> opens here as a page or file when your instructor publishes it.</p>`;
     case "Discussions":
-      return `<p>Discussion topics for <strong>${code}</strong> are not loaded in this demo.</p>`;
+      return `<p>There are no discussions to display for <strong>${code}</strong>.</p>`;
     case "Quizzes":
-      return `<p>Quiz listings for <strong>${code}</strong> are not wired up in this preview.</p>`;
+      return `<p>There are no quizzes listed for <strong>${code}</strong> on this page.</p>`;
     case "Files":
-      return `<p>Files and folders for <strong>${code}</strong> are not synchronised in this clone.</p>`;
+      return `<p>Files and folders for <strong>${code}</strong> will appear here when your instructor adds them.</p>`;
     case "Pages":
-      return `<p>Course pages for <strong>${code}</strong> are unavailable offline.</p>`;
+      return `<p>Course pages for <strong>${code}</strong> will appear here when published.</p>`;
     case "Zoom":
-      return `<p>Scheduled Zoom meetings for <strong>${code}</strong> would appear here when LTI tools are enabled.</p>`;
+      return `<p>Scheduled meetings for <strong>${code}</strong> appear here when the Zoom integration is enabled.</p>`;
     case "Media Gallery":
-      return `<p>Media items for <strong>${code}</strong> are not included in this bundle.</p>`;
+      return `<p>There is no media to display for <strong>${code}</strong> yet.</p>`;
     case "Library Resources":
     case "Library Reading List":
-      return `<p>Library resources for <strong>${code}</strong> would embed from the University of Toronto Libraries.</p>`;
+      return `<p>Library resources for <strong>${code}</strong> are provided through University of Toronto Libraries.</p>`;
     case "Academic Calendar":
     case "New Student Website":
-      return `<p>This link would open an external resource in a new tab on the live orientation site.</p>`;
+      return `<p>This link opens an external resource in a new browser tab.</p>`;
     default:
-      return `<p>The <strong>${escape(toolName)}</strong> area for <strong>${code}</strong> is not wired up in this build. Return via ${gradeLink}.</p>`;
+      return `<p>The <strong>${escape(toolName)}</strong> section for <strong>${code}</strong> has no items to display. Use ${gradeLink} to view grades.</p>`;
   }
 }
 
@@ -684,7 +686,7 @@ function renderCourseToolPage(courseId, toolName) {
   rememberCourseId(course.id);
   updateGlobalNavActive("courses");
   const crumbs = [
-    { label: course.code, href: "#", cls: "js-demo-to-courses" },
+    { label: course.code, href: "#", cls: "js-nav-courses" },
     { label: toolName },
     { label: STUDENT.fullName }
   ];
@@ -698,7 +700,7 @@ function renderCourseToolPage(courseId, toolName) {
         <div class="placeholder-inner">
           <h2>${escape(toolName)}</h2>
           ${bodyHtml}
-          <p class="hint"><a href="#course/${course.id}">Back to Grades</a> · Quercus demo</p>
+          <p class="hint"><a href="#course/${course.id}">Back to Grades</a> · University of Toronto Quercus</p>
         </div>
       </section>
     </div>
@@ -724,7 +726,7 @@ function onGlobalNavClick(e) {
   }
   if (gn === "logo") {
     withLoading(() => {
-      renderGlobalDemoPage("dashboard");
+      renderGlobalPlaceholderPage("dashboard");
       updateGlobalNavActive("dashboard");
     });
     return;
@@ -742,7 +744,7 @@ function onGlobalNavClick(e) {
   ]);
   if (keys.has(gn)) {
     withLoading(() => {
-      renderGlobalDemoPage(gn);
+      renderGlobalPlaceholderPage(gn);
       updateGlobalNavActive(gn);
     });
   }
@@ -759,8 +761,8 @@ function onCourseToolClick(e) {
   withLoading(() => renderCourseToolPage(courseId, toolName));
 }
 
-function onDemoToCoursesClick(e) {
-  const a = e.target.closest("a.js-demo-to-courses");
+function onNavCoursesClick(e) {
+  const a = e.target.closest("a.js-nav-courses");
   if (!a) return;
   e.preventDefault();
   withLoading(() => {
@@ -806,7 +808,7 @@ route();
 const globalNavEl = document.getElementById("globalNav");
 if (globalNavEl) globalNavEl.addEventListener("click", onGlobalNavClick);
 document.body.addEventListener("click", onCourseToolClick);
-document.body.addEventListener("click", onDemoToCoursesClick);
+document.body.addEventListener("click", onNavCoursesClick);
 document.body.addEventListener("click", onGradesNavClick);
 
 /* Show URL status pill on hover over course links (like browser status bar in screenshots) */
