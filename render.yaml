@@ -1,0 +1,23 @@
+# Render Blueprint — static site (HTML/CSS/JS at repo root)
+# Docs: https://render.com/docs/blueprint-spec
+#
+# If this repo’s Git root is a parent folder and the site lives in ./websites,
+# set rootDir on this service (e.g. rootDir: websites) and keep staticPublishPath: .
+
+services:
+  - type: web
+    name: quercus-grades-demo
+    runtime: static
+    # No bundler — publish files as-is from the publish directory
+    buildCommand: 'echo "Static site — no build"'
+    staticPublishPath: .
+    envVars:
+      - key: SKIP_INSTALL_DEPS
+        value: "true"
+    headers:
+      - path: /*
+        name: X-Frame-Options
+        value: SAMEORIGIN
+      - path: /*
+        name: X-Content-Type-Options
+        value: nosniff

@@ -1,0 +1,5 @@
+{
+  "name": "quercus-grades-demo",
+  "private": true,
+  "description": "Static UofT Quercus grades UI demo (no npm build)"
+}

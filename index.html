@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Grades</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Lato:wght@400;700;900&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css?v=3" />
+</head>
+<body>
+  <div id="app">
+    <!-- Global left sidebar -->
+    <aside class="global-nav" id="globalNav">
+      <a class="gn-logo" href="#" title="Dashboard" data-gn="logo" aria-label="University of Toronto — Dashboard">
+        <img class="gn-logo-img" src="images/uoft-logo.png" width="52" height="52" alt="" />
+      </a>
+
+      <a class="gn-item" href="#" data-label="Account" data-gn="account">
+        <span class="gn-icon">
+          <svg viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="8" r="4"/><path d="M4 22c0-4.4 3.6-8 8-8s8 3.6 8 8"/></svg>
+        </span>
+        <span class="gn-label">Account</span>
+      </a>
+      <a class="gn-item" href="#" data-label="Dashboard" data-gn="dashboard">
+        <span class="gn-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 12c0-5 4-9 9-9s9 4 9 9"/><path d="M12 12l5-3"/></svg>
+        </span>
+        <span class="gn-label">Dashboard</span>
+      </a>
+      <a class="gn-item active" href="#" data-label="Courses" data-gn="courses" id="navCourses">
+        <span class="gn-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="4" width="18" height="16" rx="1"/><path d="M3 8h18"/></svg>
+        </span>
+        <span class="gn-label">Courses</span>
+      </a>
+      <a class="gn-item" href="#" data-label="Groups" data-gn="groups">
+        <span class="gn-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="9" cy="9" r="3"/><circle cx="17" cy="11" r="2.5"/><path d="M3 20c0-3 3-5 6-5s6 2 6 5"/><path d="M14 20c0-2 2-3.5 4-3.5s4 1.5 4 3.5"/></svg>
+        </span>
+        <span class="gn-label">Groups</span>
+      </a>
+      <a class="gn-item" href="#" data-label="Calendar" data-gn="calendar">
+        <span class="gn-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="5" width="18" height="16" rx="1"/><path d="M3 9h18M8 3v4M16 3v4"/></svg>
+        </span>
+        <span class="gn-label">Calendar</span>
+      </a>
+      <a class="gn-item" href="#" data-label="Inbox" data-gn="inbox">
+        <span class="gn-icon gn-icon-inbox">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 7l9 6 9-6"/><rect x="3" y="5" width="18" height="14" rx="1"/></svg>
+          <span class="gn-badge">27</span>
+        </span>
+        <span class="gn-label">Inbox</span>
+      </a>
+      <a class="gn-item" href="#" data-label="History" data-gn="history">
+        <span class="gn-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>
+        </span>
+        <span class="gn-label">History</span>
+      </a>
+      <a class="gn-item" href="#" data-label="Materials Costs" data-gn="materials">
+        <span class="gn-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 6h16v3H4zM4 11h16v9H4z"/><path d="M9 14h6"/></svg>
+        </span>
+        <span class="gn-label">Materials<br/>Costs</span>
+      </a>
+      <a class="gn-item" href="#" data-label="Course Evals" data-gn="evals">
+        <span class="gn-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M9 11l2 2 4-4"/><rect x="4" y="4" width="16" height="16" rx="2"/></svg>
+        </span>
+        <span class="gn-label">Course Evals</span>
+      </a>
+      <a class="gn-item" href="#" data-label="Help" data-gn="help">
+        <span class="gn-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="9"/><path d="M9.5 9.5a2.5 2.5 0 1 1 3.5 2.3c-.8.4-1 .9-1 1.7"/><circle cx="12" cy="17" r="1" fill="currentColor"/></svg>
+        </span>
+        <span class="gn-label">Help</span>
+      </a>
+      <button class="gn-collapse" title="Minimize global navigation" aria-label="Minimize global navigation">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 6l-6 6 6 6"/><line x1="6" y1="4" x2="6" y2="20" stroke-width="2"/></svg>
+      </button>
+    </aside>
+
+    <!-- Main viewport: gets re-rendered by app.js based on route -->
+    <main id="viewport"></main>
+  </div>
+
+  <!-- Full-screen loading overlay (covers viewport; outside #app flex) -->
+  <div id="loadingOverlay" class="loading-overlay" hidden aria-hidden="true">
+    <div class="loading-card">
+      <div class="loading-spinner" aria-hidden="true"></div>
+      <p class="loading-text">Loading…</p>
+    </div>
+  </div>
+
+  <!-- Tooltip url status (lower-left like browser status bar in screenshots) -->
+  <div id="statusbar" class="statusbar" hidden>https://q.utoronto.ca</div>
+
+  <script src="data.js?v=2"></script>
+  <script src="app.js?v=3"></script>
+</body>
+</html>
