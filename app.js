@@ -172,7 +172,7 @@ function topBar(crumbs) {
   // crumbs = [{label, href?}, ...]
   return `
     <div class="top-bar">
-      <button class="hamburger" aria-label="Menu">
+      <button type="button" class="hamburger" aria-label="Open menu" aria-expanded="false" aria-controls="globalNav">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
           <line x1="3" y1="6"  x2="21" y2="6"/>
           <line x1="3" y1="12" x2="21" y2="12"/>
@@ -806,7 +806,61 @@ window.addEventListener("hashchange", route);
 route();
 
 const globalNavEl = document.getElementById("globalNav");
+const gnBackdropEl = document.getElementById("gnBackdrop");
+
+function isMobileNavViewport() {
+  return window.matchMedia("(max-width: 900px)").matches;
+}
+
+function syncMobileNavUi() {
+  const open = document.body.classList.contains("mobile-nav-open");
+  if (gnBackdropEl) {
+    gnBackdropEl.setAttribute("aria-hidden", open ? "false" : "true");
+  }
+  document.querySelectorAll(".hamburger").forEach((btn) => {
+    btn.setAttribute("aria-expanded", open ? "true" : "false");
+    btn.setAttribute("aria-label", open ? "Close menu" : "Open menu");
+  });
+}
+
+function closeMobileNav() {
+  document.body.classList.remove("mobile-nav-open");
+  syncMobileNavUi();
+}
+
+function toggleMobileNav() {
+  if (!isMobileNavViewport()) return;
+  document.body.classList.toggle("mobile-nav-open");
+  syncMobileNavUi();
+}
+
 if (globalNavEl) globalNavEl.addEventListener("click", onGlobalNavClick);
+if (globalNavEl) {
+  globalNavEl.addEventListener("click", (e) => {
+    if (!isMobileNavViewport()) return;
+    if (e.target.closest("[data-gn]") || e.target.closest(".gn-logo") || e.target.closest(".gn-collapse")) {
+      closeMobileNav();
+    }
+  });
+}
+document.body.addEventListener("click", (e) => {
+  const hb = e.target.closest(".hamburger");
+  if (hb) {
+    e.preventDefault();
+    toggleMobileNav();
+    return;
+  }
+  if (e.target === gnBackdropEl || e.target.classList?.contains("gn-backdrop")) {
+    closeMobileNav();
+  }
+});
+document.addEventListener("keydown", (e) => {
+  if (e.key === "Escape") closeMobileNav();
+});
+window.addEventListener("resize", () => {
+  if (!isMobileNavViewport()) closeMobileNav();
+});
+
 document.body.addEventListener("click", onCourseToolClick);
 document.body.addEventListener("click", onNavCoursesClick);
 document.body.addEventListener("click", onGradesNavClick);
